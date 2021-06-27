@@ -36,10 +36,10 @@ const userCtrl = {
 
       const user = await Users.findOne({email})
       if(!user)
-        return res.status(400).json({msg:"User does not exist.."})
+        return res.status(400).json({msg:"User does not exist..", errVal:true})
             
       const isMatch =await bcrypt.compare(password, user.password)
-      if(!isMatch) return res.status(400).json({msg: "incorrect password"})      
+      if(!isMatch) return res.status(400).json({msg: "incorrect password", errVal:true})      
        
       res.json({msg: "Login succesfull", errVal:false})
 

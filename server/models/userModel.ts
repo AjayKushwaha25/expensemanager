@@ -18,10 +18,6 @@ const userSchema: any = new Schema({
     role : {
         type: Number,
         default: 1
-    },
-    cart:{
-        type: Array,
-        default: []
     }
 }, {
     timestamps: true
