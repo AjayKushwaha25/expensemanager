@@ -1,5 +1,4 @@
 server/node_modules
 serverTest
 extra
-.env
-node_modules
+

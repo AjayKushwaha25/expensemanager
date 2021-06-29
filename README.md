@@ -1,4 +1,4 @@
-<!-- Install Packages -->
+# Install Packages
 cors
 dotenv
 express
@@ -7,9 +7,9 @@ ts-node
 tsc
 typescript
 
-<!-- ts for Typescript -->
-<!-- Setup server -->
+# ts for Typescript
+# Setup server
 server.ts
 
-<!-- Create Model -->
+# Create Model -->
 models->userModel.ts
