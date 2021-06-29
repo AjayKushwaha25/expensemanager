@@ -18,6 +18,14 @@ const userSchema: any = new Schema({
     role : {
         type: Number,
         default: 1
+    },
+    expense: {
+        type: Array,
+        default:[]
+    },
+    income: {
+        type:Array,
+        default:[]
     }
 }, {
     timestamps: true

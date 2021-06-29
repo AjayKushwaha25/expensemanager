@@ -10,6 +10,7 @@ console.log("check")
 
 
 app.use('/user', require('./routes/userRouter'))
+app.use('/user', require('./routes/categoryRouter'))
 
 //Mongo Connection
 const URI = process.env.MONGODB_URL
