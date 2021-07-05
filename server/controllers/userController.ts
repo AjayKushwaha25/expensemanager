@@ -32,17 +32,17 @@ const userCtrl = {
   },
   login: async (req:any, res:any) => {
     try {
-      const {email,password} = req.body;
-
+      const {email,password,name,_id} = req.body;
       const user = await Users.findOne({email})
       if(!user)
         return res.status(400).json({msg:"User does not exist..", errVal:true})
             
       const isMatch =await bcrypt.compare(password, user.password)
       if(!isMatch) return res.status(400).json({msg: "incorrect password", errVal:true})      
-       
-      res.json({msg: "Login succesfull", errVal:false})
+      const data = ({pas:req.body.password,name:user.name,role:user.role,id:user._id});
 
+      res.json({msg: "Login succesfull", errVal:false,data:data});
+      console.log(res.body)
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
