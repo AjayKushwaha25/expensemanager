@@ -1,9 +1,14 @@
-const router = require('express').Router()
+import { Router } from "express"
+
+const router: Router = require('express').Router()
 const useCtrl = require('../controllers/userController')
+const Users = require("../models/userModel");
 
 router.post('/register', useCtrl.register)
 
 router.post('/login', useCtrl.login)
+
+router.get('/profile/:id', useCtrl.userProfile)
 
 router.put('/addExpense/:id', useCtrl.addExpense)
 

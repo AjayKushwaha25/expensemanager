@@ -1,3 +1,5 @@
+import { Request, Response } from "express";
+
 const { reset } = require("nodemon");
 const Users = require("../models/userModel");
 const bcrypt = require("bcrypt");
@@ -93,6 +95,19 @@ const userCtrl = {
     } catch (err) {
         return res.status(500).json({msg: err.message})
     }
+  },
+  userProfile: async (req: any, res: any) => {
+    try {
+      const user = await Users.findOne({_id: req.params.id});
+      if(user=="" || user == null || !user){
+        return res.status(400).json({msg: "User Not Found"});
+      }else{
+        res.json(user)
+      }
+    } catch (err) {
+      return res.status(500).json({ err });
+    }
+
   },
 }
 

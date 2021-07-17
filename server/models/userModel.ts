@@ -15,6 +15,14 @@ const userSchema: any = new Schema({
         type: String,
         default: []
     },
+    mobile : {
+        type: Number,
+        default: null
+    },
+    dob : {
+        type: Date,
+        default: null
+    },
     role : {
         type: Number,
         default: 1
