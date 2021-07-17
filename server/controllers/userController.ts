@@ -32,17 +32,17 @@ const userCtrl = {
   },
   login: async (req:any, res:any) => {
     try {
-      const {email,password} = req.body;
-
+      const {email,password,name,_id} = req.body;
       const user = await Users.findOne({email})
       if(!user)
         return res.status(400).json({msg:"User does not exist..", errVal:true})
             
       const isMatch =await bcrypt.compare(password, user.password)
       if(!isMatch) return res.status(400).json({msg: "incorrect password", errVal:true})      
-       
-      res.json({msg: "Login succesfull", errVal:false})
+      const data = ({pas:req.body.password,name:user.name,role:user.role,id:user._id});
 
+      res.json({msg: "Login succesfull", errVal:false,data:data});
+      console.log(res.body)
     } catch (err) {
       return res.status(500).json({ msg: err.message });
     }
@@ -59,19 +59,31 @@ const userCtrl = {
   },
   addExpense: async (req: any, res:any) =>{
    try{
-      const user = await Users.findById(res.user.id)
-    if(!user) return res.status(400).json({msg:"user does not exist"})
+    const { role, expense, income, name, email, password} = req.body;
+    //  if(!images) return res.status(400).json({msg: "No image Upload"})
+    const expenseGet: any[] = req.params.expense
+      await Users.findOneAndUpdate({_id: req.params.id},{
+         expense:req.body.expense
+      })
 
-    await Users.findOneAndUpdate({_id:req.user.id},{
-      expense: req.body.expense
-    })
-    return res.json({msg:"Expense added"})
+      res.json({msg: "Updated a Expense"})
   }catch(err){
     return res.status(500).json({msg:err.message})
   }
   },
-  addIncome: async () =>{
-
+  addIncome: async (req:any, res:any) =>{
+    try{
+      const { role, expense, income, name, email, password} = req.body;
+      //  if(!images) return res.status(400).json({msg: "No image Upload"})
+     // const expenseGet: any[] = req.params.expense
+        await Users.findOneAndUpdate({_id: req.params.id},{
+           income:req.body.income
+        })
+  
+        res.json({msg: "Updated a Income"})
+    }catch(err){
+      return res.status(500).json({msg:err.message})
+    }
   },
   getUser: async (req: any, res:any ) =>{
     try {
