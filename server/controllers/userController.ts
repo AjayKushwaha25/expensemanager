@@ -112,9 +112,13 @@ const userCtrl = {
   updateUserProfile : async (req :Request, res: Response) =>{
     try {
       const data= req.body;
+      const password= req.body.password;
+      if(password){
       // return res.json(data)
+        req.body.password = await bcrypt.hash(password, 10);
+      }
       await Users.findByIdAndUpdate({_id: req.params.id},data)
-      res.json({msg: "Record Updated Successfully", errVal: false});   
+      res.json({msg: "Record Updated Successfully", errVal: false});
     } catch (err) {
       return res.status(500).json({msg: err.message, errVal: true, data: null});
     }
