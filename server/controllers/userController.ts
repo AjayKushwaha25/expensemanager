@@ -102,12 +102,22 @@ const userCtrl = {
       if(user=="" || user == null || !user){
         return res.status(400).json({msg: "User Not Found"});
       }else{
-        res.json(user)
+        res.json({msg: "Record Found", errVal: false, data: user})
       }
     } catch (err) {
-      return res.status(500).json({ err });
+      return res.status(500).json({msg: err.message, errVal: true, data: null});
     }
 
+  },
+  updateUserProfile : async (req :Request, res: Response) =>{
+    try {
+      const data= req.body;
+      // return res.json(data)
+      await Users.findByIdAndUpdate({_id: req.params.id},data)
+      res.json({msg: "Record Updated Successfully", errVal: false});   
+    } catch (err) {
+      return res.status(500).json({msg: err.message, errVal: true, data: null});
+    }
   },
 }
 

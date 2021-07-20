@@ -14,6 +14,9 @@ router.put('/addExpense/:id', useCtrl.addExpense)
 
 router.put('/addIncome/:id', useCtrl.addIncome)
 
+// Update User Details
+router.put('/profile/:id', useCtrl.updateUserProfile);
+
 // router.get('/getuser/:id')
 
 // router.patch('/addExpense', useCtrl.addExpense)
