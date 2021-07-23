@@ -14,6 +14,7 @@ router.put('/addExpense/:id', useCtrl.addExpense)
 
 router.put('/addIncome/:id', useCtrl.addIncome)
 
+// Update User Detailsnpm
 router.get('/showIncome/:id', useCtrl.showIncome)
 
 router.get('/showExpense/:id', useCtrl.showExpense)
