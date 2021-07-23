@@ -15,6 +15,11 @@ router.put('/addExpense/:id', useCtrl.addExpense)
 router.put('/addIncome/:id', useCtrl.addIncome)
 
 // Update User Detailsnpm
+router.get('/showIncome/:id', useCtrl.showIncome)
+
+router.get('/showExpense/:id', useCtrl.showExpense)
+
+// Update User Details
 router.put('/profile/:id', useCtrl.updateUserProfile);
 
 // router.get('/getuser/:id')

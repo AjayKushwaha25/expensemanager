@@ -60,31 +60,49 @@ const userCtrl = {
 
   },
   addExpense: async (req: any, res:any) =>{
-   try{
-    const { role, expense, income, name, email, password} = req.body;
-    //  if(!images) return res.status(400).json({msg: "No image Upload"})
-    const expenseGet: any[] = req.params.expense
-      await Users.findOneAndUpdate({_id: req.params.id},{
-         expense:req.body.expense
-      })
-
-      res.json({msg: "Updated a Expense"})
-  }catch(err){
-    return res.status(500).json({msg:err.message})
-  }
+    try{
+      const data = req.body;
+      //  if(!images) return res.status(400).json({msg: "No image Upload"})
+     // const expenseGet: any[] = req.params.expense
+        const expenseShow = await Users.findOneAndUpdate({_id: req.params.id},{
+          $push: {expense:data}
+        })
+  
+        res.json({msg: "Updated a Expense", data: expenseShow})
+    }catch(err){
+      return res.status(500).json({msg: err.message,errVal: true})
+    }
   },
   addIncome: async (req:any, res:any) =>{
     try{
-      const { role, expense, income, name, email, password} = req.body;
+      const data = req.body;
       //  if(!images) return res.status(400).json({msg: "No image Upload"})
      // const expenseGet: any[] = req.params.expense
-        await Users.findOneAndUpdate({_id: req.params.id},{
-           income:req.body.income
+        const incomeShow = await Users.findOneAndUpdate({_id: req.params.id},{
+          $push: {income:data}
         })
   
-        res.json({msg: "Updated a Income"})
+        res.json({msg: "Updated a Income", data: incomeShow})
     }catch(err){
-      return res.status(500).json({msg:err.message})
+      return res.status(500).json({msg: err.message,errVal: true})
+    }
+  },
+  showIncome: async (req:any, res:any) =>{
+    try {
+      const userIncomeByID = await Users.findById(req.params.id).select('income')
+      if(!userIncomeByID) return res.status(400).json({msg: "User does not exist."})
+      res.json({msg: "Record Found",errVal: false, data: userIncomeByID})
+    } catch (err) {
+      return res.status(500).json({msg: err.message,errVal: true})
+    }
+  },
+  showExpense: async (req:any, res:any) =>{
+    try {
+      const userExpenseByID = await Users.findById(req.params.id).select('expense')
+      if(!userExpenseByID) return res.status(400).json({msg: "User does not exist."})
+      res.json({msg: "Record Found",errVal: false, data: userExpenseByID})
+    } catch (err) {
+        return res.status(500).json({msg: err.message,errVal: true})
     }
   },
   getUser: async (req: any, res:any ) =>{
