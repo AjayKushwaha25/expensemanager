@@ -141,6 +141,60 @@ const userCtrl = {
       return res.status(500).json({msg: err.message, errVal: true, data: null});
     }
   },
+  addCategory: async (req:any, res:any) =>{
+    try{
+      const data = req.body;
+      if(data.type=="Income"){
+        const catName = data.name;
+        const result = await Users.findOne({ _id: req.params.id });
+        // const incomeCat = result.incomeCategory.toString().toLowerCase();
+        // const incomeCatLC = incomeCat.toString().toLowerCase();
+        if (result.incomeCategory.toString().toLowerCase().includes(catName.toLowerCase())){
+          return res.status(400).json({ msg: "The Income Category already exists.", errVal: true });
+        }else{
+          await Users.findOneAndUpdate({_id: req.params.id},{
+            $push: {incomeCategory:data.name}
+          })
+          const addIncomeCat = await Users.findOne({_id: req.params.id});
+          res.json({msg: "Income Category Added", data: addIncomeCat, errVal: false})
+        }
+      }else if(data.type=="Expense"){
+        const catName = data.name;
+        const result = await Users.findOne({ _id: req.params.id });
+        if (result.expenseCategory.toString().toLowerCase().includes(catName.toLowerCase())){
+          return res.status(400).json({ msg: "The Expense Category already exists.", errVal: true });
+        }else{
+          await Users.findOneAndUpdate({_id: req.params.id},{
+            $push: {expenseCategory:data.name}
+          })
+          const addExpenseCat = await Users.findOne({_id: req.params.id});
+          res.json({msg: "Expense Category Added", data: addExpenseCat, errVal: false})
+        }
+        }else{
+          return res.status(500).json({msg: "Undefined Category",errVal: true})
+        }
+    }catch(err){
+      return res.status(500).json({msg: err.message,errVal: true})
+    }
+  },
+  showIncomeCategory: async (req:any, res:any) =>{
+    try {
+      const incomeCategoryByID = await Users.findById(req.params.id).select('incomeCategory')
+      if(!incomeCategoryByID) return res.status(400).json({msg: "No records found.", errVal: true})
+      res.json({msg: "Record Found",errVal: false, data: incomeCategoryByID})
+    } catch (err) {
+        return res.status(500).json({msg: err.message,errVal: true})
+    }
+  },
+  showExpenseCategory: async (req:any, res:any) =>{
+    try {
+      const expenseCategoryByID = await Users.findById(req.params.id).select('expenseCategory')
+      if(!expenseCategoryByID) return res.status(400).json({msg: "No records found.", errVal: true})
+      res.json({msg: "Record Found",errVal: false, data: expenseCategoryByID})
+    } catch (err) {
+        return res.status(500).json({msg: err.message,errVal: true})
+    }
+  },
 }
 
 module.exports = userCtrl;

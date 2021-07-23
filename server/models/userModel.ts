@@ -34,6 +34,14 @@ const userSchema: any = new Schema({
     income: {
         type:Array,
         default:[]
+    },
+    incomeCategory: {
+        type:Array,
+        default:[]
+    },
+    expenseCategory: {
+        type:Array,
+        default:[]
     }
 }, {
     timestamps: true

@@ -18,6 +18,12 @@ router.get('/showIncome/:id', useCtrl.showIncome)
 
 router.get('/showExpense/:id', useCtrl.showExpense)
 
+router.put('/addCategory/:id', useCtrl.addCategory)
+
+router.get('/showIncomeCategory/:id', useCtrl.showIncomeCategory)
+
+router.get('/showExpenseCategory/:id', useCtrl.showExpenseCategory)
+
 // Update User Details
 router.put('/profile/:id', useCtrl.updateUserProfile);
 
