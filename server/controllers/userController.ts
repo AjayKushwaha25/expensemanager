@@ -107,7 +107,8 @@ const userCtrl = {
     } catch (err) {
       return res.status(500).json({msg: err.message, errVal: true, data: null});
     }
-
+//2021-02-21
+//29-11-2011
   },
   updateUserProfile : async (req :Request, res: Response) =>{
     try {
@@ -117,6 +118,8 @@ const userCtrl = {
       // return res.json(data)
         req.body.password = await bcrypt.hash(password, 10);
       }
+      
+
       await Users.findByIdAndUpdate({_id: req.params.id},data)
       res.json({msg: "Record Updated Successfully", errVal: false});
     } catch (err) {
